@@ -24,6 +24,8 @@ dotenv.config({ path: ".env.example" });
  * Controllers (route handlers).
  */
 import * as homeController from "./controllers/home";
+import * as usersController from "./controllers/users";
+import * as groupsController from "./controllers/groups";
 
 /**
  * Create Express server.
@@ -50,6 +52,8 @@ app.use(lusca.xssProtection(true));
  * Primary app routes.
  */
 app.get("/", homeController.index);
+app.post("/users", usersController.create);
+app.post("/groups", groupsController.create);
 
 
 
