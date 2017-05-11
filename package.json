@@ -1,0 +1,38 @@
+{
+  "name": "groupme-rest-api",
+  "version": "0.1.0",
+  "description": "The rest api for the groupme app",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Alackey/groupme-rest-api.git"
+  },
+  "author": "Anthony Lackey",
+  "license": "MIT",
+  "scripts": {
+    "start": "npm run build && npm run serve",
+    "build": "tsc",
+    "serve": "node dist/server.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "compression": "^1.6.2",
+    "dotenv": "^2.0.0",
+    "errorhandler": "^1.4.3",
+    "express": "^4.14.0",
+    "express-flash": "^0.0.2",
+    "express-validator": "^3.1.3",
+    "lusca": "^1.4.1",
+    "morgan": "^1.7.0"
+  },
+  "devDependencies": {
+    "@types/body-parser": "^1.16.2",
+    "@types/dotenv": "^2.0.20",
+    "@types/errorhandler": "0.0.30",
+    "@types/express": "^4.0.35",
+    "@types/morgan": "^1.7.32",
+    "@types/node": "^7.0.12",
+    "@types/nodemailer": "^1.3.32",
+    "tslint": "^5.0.0",
+    "typescript": "^2.2.2"
+  }
+}
