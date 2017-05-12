@@ -50,14 +50,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(expressValidator());
 app.use(flash());
-app.use(lusca.xframe("SAMEORIGIN"));
 app.use(lusca.xssProtection(true));
 
 /**
  * Primary app routes.
  */
 app.get("/", homeController.index);
-app.post("/users", usersController.create);
+app.route("/users")
+  .get(usersController.getByUsername)
+  .post(usersController.create);
 app.post("/groups", groupsController.create);
 
 
