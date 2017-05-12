@@ -10,16 +10,17 @@ import { DBConnection } from "../database/cloudsql";
 export let getByUsername = (req: Request, res: Response) => {
   const username = req.query.username;
   if (username === undefined) {
-    res.json({ error: "No username provided" });
+    res.status(400).json({ error: "No username provided" });
+    return;
   }
 
   const connection = DBConnection.Instance;
   connection.getByPrimary("users", username)
     .then((response) => {
-      res.json(response);
-    })
-    .catch((err) => {
-      res.json(err);
+      if (response === undefined) {
+        res.status(400).json({ error: "User not found" })
+      }
+      res.send(response);
     });
 };
 
@@ -39,12 +40,10 @@ export let create = (req: Request, res: Response) => {
 
   connection.insert(user)
     .then((response) => {
-      console.log(response);
+      res.json({ status: "success" });
     })
     .catch((err) => {
-      console.log(err);
+      res.status(400).json(err);
     });
-  console.log(JSON.stringify(user));
-  res.json({ hello: user });
 };
 
