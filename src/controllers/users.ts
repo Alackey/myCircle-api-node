@@ -9,13 +9,20 @@ import { DBConnection } from "../database/cloudsql"
 export let create = (req: Request, res: Response) => {
   let connection = DBConnection.Instance;
   let user = new User(
-    req.body.uid,
     req.body.username,
-    req.body.photo,
+    req.body.photoUrl,
     req.body.firstname,
     req.body.lastname,
     req.body.email
   );
+
+  connection.insert(user)
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   console.log(JSON.stringify(user));
   res.json({ hello: user });
 };

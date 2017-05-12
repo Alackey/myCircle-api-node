@@ -1,10 +1,11 @@
 const mysql = require('mysql');
+import { User } from "../models/User";
 
 
 // The database connection
 export class DBConnection {
   private static instance: DBConnection;
-  private connection: any;
+  public connection: any;
 
   constructor() { }
 
@@ -31,6 +32,18 @@ export class DBConnection {
     }
     
     this.connection = mysql.createConnection(options);
+  }
+
+  // Insert an object into the database
+  public insert(data: User) {
+    return new Promise((resolve, reject) => {
+      this.connection.query('INSERT INTO `users` SET ?', data, (err: any, res: any) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(res);
+      });
+    });
   }
 }
 
@@ -60,9 +73,11 @@ export function createSchema() {
     USE \`groupup\`;
     CREATE TABLE IF NOT EXISTS \`groupup\`.\`users\` (
       \`username\` VARCHAR(255) NOT NULL,
-      \`pictureUrl\` VARCHAR(255) NULL,
+      \`photoUrl\` VARCHAR(255) NULL,
       \`firstname\` VARCHAR(255) NOT NULL,
       \`lastname\` VARCHAR(255) NOT NULL,
+      \`email\` VARCHAR(255) NOT NULL,
+      \`second_email\` VARCHAR(255) NULL,
     PRIMARY KEY (\`username\`));`,
     (err: any) => {
       if (err) {
