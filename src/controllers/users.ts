@@ -11,7 +11,6 @@ export let getByUsername = (req: Request, res: Response) => {
   const username = req.query.username;
   if (username === undefined) {
     res.status(400).json({ error: "No username provided" });
-    return;
   }
 
   const connection = DBConnection.Instance;

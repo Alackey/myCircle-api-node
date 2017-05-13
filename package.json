@@ -9,10 +9,11 @@
   "author": "Anthony Lackey",
   "license": "MIT",
   "scripts": {
+    "prestart": "rm -r dist/*",
     "start": "npm run build && npm run serve",
     "build": "tsc",
     "serve": "node dist/server.js",
-    "test": "tsc && mocha ./dist/test/**/*.js"
+    "test": "npm run prestart && tsc && NODE_ENV=test mocha ./dist/test/**/*.js"
   },
   "dependencies": {
     "@types/mysql": "^0.0.33",

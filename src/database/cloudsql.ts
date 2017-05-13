@@ -1,5 +1,6 @@
 const mysql = require("mysql");
 import { User } from "../models/User";
+import Config from "../config/config";
 
 
 // The database connection
@@ -44,6 +45,8 @@ export class DBConnection {
           pkName = "username";
           break;
       }
+
+      table = Config.Instance.usersTable;
       
       // Configure columns identifier
       let columns = ["*"];
@@ -61,7 +64,8 @@ export class DBConnection {
   // Insert an object into the database
   public insert(data: User) {
     return new Promise((resolve, reject) => {
-      this.connection.query("INSERT INTO `users` SET ??", data, (err: any, res: any) => {
+      let table: string = Config.Instance.usersTable;
+      this.connection.query("INSERT INTO ?? SET ?", [table, data], (err: any, res: any) => {
         if (err) {
           reject(err);
         }
@@ -91,12 +95,14 @@ export function createSchema() {
     multipleStatements: true
   };
   const connection = mysql.createConnection(options);
+  
+  let usersTable: string = Config.Instance.usersTable;
 
   connection.query(
     `CREATE DATABASE IF NOT EXISTS \`groupup\`
       DEFAULT CHARACTER SET = 'utf8';
     USE \`groupup\`;
-    CREATE TABLE IF NOT EXISTS \`groupup\`.\`users\` (
+    CREATE TABLE IF NOT EXISTS \`groupup\`.\`${usersTable}\` (
       \`username\` VARCHAR(255) NOT NULL,
       \`photoUrl\` VARCHAR(255) NULL,
       \`firstname\` VARCHAR(255) NOT NULL,
@@ -108,7 +114,6 @@ export function createSchema() {
       if (err) {
         throw err;
       }
-      console.log("Successfully created schema");
       connection.end();
     }
   );
