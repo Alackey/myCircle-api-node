@@ -78,15 +78,9 @@ export class DBConnection {
   }
 
   // Delete an object from the database
-  public deleteByPK(data: any) {
+  public deleteByPK(table: string, pkValue: string) {
     return new Promise((resolve, reject) => {
-      let table: string;
-      if (data instanceof User) {
-        table = "users";
-      }
-
       let pk: string = this.pkFromTable(table);
-      let pkValue: string = data[pk];
 
       this.connection.query('DELETE FROM ?? WHERE ?? = ?', [table, pk, pkValue], function (err: any, res: any) {
         if (err) reject(err);
@@ -97,7 +91,7 @@ export class DBConnection {
 
   // Get the primary key from table
   private pkFromTable(table: string): string {
-    if (table === "user") {
+    if (table === "users") {
       return "username";
     }
   }

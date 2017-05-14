@@ -58,7 +58,8 @@ app.use(lusca.xssProtection(true));
 app.get("/", homeController.index);
 app.route("/users")
   .get(usersController.getByUsername)
-  .post(usersController.create);
+  .post(usersController.create)
+  .delete(usersController.deleteUser);
 app.post("/groups", groupsController.create);
 
 

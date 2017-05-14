@@ -46,3 +46,25 @@ export let create = (req: Request, res: Response) => {
     });
 };
 
+/**
+ * DELETE /
+ * Delete a user.
+ */
+export let deleteUser = (req: Request, res: Response) => {
+  const username = req.query.username;
+  if (username === undefined) {
+    res.status(400).json({ error: "No username provided" });
+  }
+
+  const connection = DBConnection.Instance;
+  connection.deleteByPK("users", username)
+    .then((response) => {
+      if (response === undefined) {
+        res.status(400).json({ error: "User not found" })
+      }
+      res.json({ status: "success" });
+    }).catch((err) => {
+      res.status(400).json({ error: err });
+    });
+};
+
