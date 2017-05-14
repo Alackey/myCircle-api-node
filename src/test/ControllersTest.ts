@@ -26,7 +26,7 @@ describe("HomeController", function () {
 
 // Users Controller
 describe("UsersController", function () {
-  describe("create()", function () {
+  describe("Create a user", function () {
     it("should create a new user", function () {
       return request(app)
         .post("/users")
@@ -39,8 +39,7 @@ describe("UsersController", function () {
     });
   });
 
-
-  describe("getByUsername()", function () {
+  describe("Get a user by username", function () {
     it("should return an error of no username provided", function () {
       return request(app)
         .get("/users")

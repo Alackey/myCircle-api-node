@@ -20,10 +20,11 @@ export class DBConnection {
 
   // Initialize a connection to the database
   private initConnection() {
+    let database: string = Config.Instance.database;
     const options: Options = {
       user: process.env.MYSQL_USER,
       password: process.env.MYSQL_PASSWORD,
-      database: "groupup",
+      database: database,
       host: process.env.MYSQL_HOST,
       multipleStatements: true
     };
@@ -45,8 +46,6 @@ export class DBConnection {
           pkName = "username";
           break;
       }
-
-      table = Config.Instance.usersTable;
       
       // Configure columns identifier
       let columns = ["*"];
@@ -62,9 +61,13 @@ export class DBConnection {
   }
 
   // Insert an object into the database
-  public insert(data: User) {
+  public insert(data: any) {
     return new Promise((resolve, reject) => {
-      let table: string = Config.Instance.usersTable;
+      let table: string;
+      if (data instanceof User) {
+        table = "users";
+      }
+
       this.connection.query("INSERT INTO ?? SET ?", [table, data], (err: any, res: any) => {
         if (err) {
           reject(err);
@@ -72,6 +75,31 @@ export class DBConnection {
         resolve(res);
       });
     });
+  }
+
+  // Delete an object from the database
+  public deleteByPK(data: any) {
+    return new Promise((resolve, reject) => {
+      let table: string;
+      if (data instanceof User) {
+        table = "users";
+      }
+
+      let pk: string = this.pkFromTable(table);
+      let pkValue: string = data[pk];
+
+      this.connection.query('DELETE FROM ?? WHERE ?? = ?', [table, pk, pkValue], function (err: any, res: any) {
+        if (err) reject(err);
+        resolve(res);
+      })
+    });
+  }
+
+  // Get the primary key from table
+  private pkFromTable(table: string): string {
+    if (table === "user") {
+      return "username";
+    }
   }
 }
 
@@ -87,22 +115,21 @@ class Options {
 
 // Create the SQL schema
 export function createSchema() {
+  let database: string = Config.Instance.database;
   const options: Options = {
     user: process.env.MYSQL_USER,
     password: process.env.MYSQL_PASSWORD,
-    database: "groupup",
+    database: database,
     host: process.env.MYSQL_HOST,
     multipleStatements: true
   };
   const connection = mysql.createConnection(options);
-  
-  let usersTable: string = Config.Instance.usersTable;
 
   connection.query(
-    `CREATE DATABASE IF NOT EXISTS \`groupup\`
+    `CREATE DATABASE IF NOT EXISTS \`${database}\`
       DEFAULT CHARACTER SET = 'utf8';
-    USE \`groupup\`;
-    CREATE TABLE IF NOT EXISTS \`groupup\`.\`${usersTable}\` (
+    USE \`${database}\`;
+    CREATE TABLE IF NOT EXISTS \`${database}\`.\`users\` (
       \`username\` VARCHAR(255) NOT NULL,
       \`photoUrl\` VARCHAR(255) NULL,
       \`firstname\` VARCHAR(255) NOT NULL,

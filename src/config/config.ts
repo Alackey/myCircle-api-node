@@ -1,6 +1,6 @@
 export default class Config {
   private static instance: Config;
-  public usersTable: string;
+  public database: string;
 
   constructor() { }
 
@@ -9,9 +9,9 @@ export default class Config {
       this.instance = new Config();
 
       // Assign variables
-      this.instance.usersTable = "users";
+      this.instance.database = "groupup";
       if (process.env.NODE_ENV === "test") {
-        this.instance.usersTable = this.instance.usersTable + "_test";
+        this.instance.database = this.instance.database + "_test";
       }
     }
     return this.instance;
