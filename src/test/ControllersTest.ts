@@ -51,4 +51,18 @@ describe("UsersController", function () {
         });
     });
   });
+
+  describe("Delete a user by username", function () {
+    it("should return success while deleting a user", function () {
+      return request(app)
+        .delete("/users")
+        .query({ username: "alackey" })
+        .expect(200)
+        .expect('Content-Type', /json/)
+        .then(response => {
+          response.body.should.have.property("status");
+          response.body.status.toLowerCase().should.equal("success");
+        });
+    });
+  });
 });
