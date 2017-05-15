@@ -9,16 +9,17 @@ export let create = (req: Request, res: Response) => {
   let group = new Group(
     req.body.id,
     req.body.name,
-    req.body.private_visibility,
-    req.body.members,
-    req.body.photo,
-    req.body.background_photo,
+    req.body.privateVis,
+    req.body.groupPage,
+    req.body.photoUrl,
+    req.body.backgroundPhotoUrl,
     req.body.description,
-    req.body.notifications,
-    req.body.events,
+    req.body.notificationsId,
+    req.body.eventsId,
     req.body.category,
     req.body.type,
-    req.body.official_club
+    req.body.officialClub,
+    req.body.discoverable
   );
   console.log(group);
   res.json({ hello: group });

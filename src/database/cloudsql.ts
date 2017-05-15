@@ -130,7 +130,26 @@ export function createSchema() {
       \`lastname\` VARCHAR(255) NOT NULL,
       \`email\` VARCHAR(255) NOT NULL,
       \`second_email\` VARCHAR(255) NULL,
-    PRIMARY KEY (\`username\`));`,
+    PRIMARY KEY (\`username\`));
+    CREATE TABLE IF NOT EXISTS \`${database}\`.\`groups\` (
+      \`id\` VARCHAR(255) NOT NULL,
+      \`name\` VARCHAR(255) NOT NULL,
+      \`privateVis\` BIT(1) NULL,
+      \`groupPage\` BIT(1) NULL,
+      \`photoUrl\` VARCHAR(255) NULL,
+      \`backgroundPhotoUrl\` VARCHAR(255) NULL,
+      \`description\` VARCHAR(255) NULL,
+      \`notificationsId\` VARCHAR(255) NULL,
+      \`eventsId\` VARCHAR(255) NULL,
+      \`category\` VARCHAR(255) NULL,
+      \`type\` VARCHAR(255) NULL,
+      \`officialClub\` BIT(1) NULL,
+      \`discoverable\` BIT(1) NULL,
+    PRIMARY KEY (\`id\`),
+    UNIQUE KEY \`notificationsId_index\` (\`notificationsId\`),
+    UNIQUE KEY \`eventsId_index\` (\`eventsId\`),
+    KEY \`category_index\` (\`category\`),
+    FULLTEXT KEY \`name_index\` (\`name\`));`,
     (err: any) => {
       if (err) {
         throw err;
