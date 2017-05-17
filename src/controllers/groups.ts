@@ -6,20 +6,22 @@ import { Group } from "../models/Group";
  * Home page.
  */
 export let create = (req: Request, res: Response) => {
-  let group = new Group(
-    req.body.id,
-    req.body.name,
-    req.body.privateVis,
-    req.body.groupPage,
-    req.body.photoUrl,
-    req.body.backgroundPhotoUrl,
-    req.body.description,
-    req.body.notificationsId,
-    req.body.eventsId,
-    req.body.category,
-    req.body.type,
-    req.body.officialClub,
-    req.body.discoverable
+  const { id, name, privateVis, groupPage, photoUrl, backgroundPhotoUrl, description, notificationsId, eventsId,
+          category, type, officialClub, discoverable } = req.body;
+  const group = new Group(
+      id,
+      name,
+      privateVis,
+      groupPage,
+      photoUrl,
+      backgroundPhotoUrl,
+      description,
+      notificationsId,
+      eventsId,
+      category,
+      type,
+      officialClub,
+      discoverable
   );
   console.log(group);
   res.json({ hello: group });

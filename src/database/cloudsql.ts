@@ -20,7 +20,7 @@ export class DBConnection {
 
   // Initialize a connection to the database
   private initConnection() {
-    let database: string = Config.Instance.database;
+    const database: string = Config.Instance.database;
     const options: Options = {
       user: process.env.MYSQL_USER,
       password: process.env.MYSQL_PASSWORD,
@@ -46,13 +46,13 @@ export class DBConnection {
           pkName = "username";
           break;
       }
-      
+
       // Configure columns identifier
       let columns = ["*"];
       if (desiredColumns !== undefined) {
         columns = desiredColumns.split(",");
       }
-      
+
       this.connection.query("SELECT ?? FROM ?? WHERE ?? = ?", [columns, table, pkName, pkValue], (error: any, results: any, fields: any) => {
         if (error) reject(error);
         resolve(results[0]);
@@ -80,12 +80,12 @@ export class DBConnection {
   // Delete an object from the database
   public deleteByPK(table: string, pkValue: string) {
     return new Promise((resolve, reject) => {
-      let pk: string = this.pkFromTable(table);
+      const pk: string = this.pkFromTable(table);
 
-      this.connection.query('DELETE FROM ?? WHERE ?? = ?', [table, pk, pkValue], function (err: any, res: any) {
+      this.connection.query("DELETE FROM ?? WHERE ?? = ?", [table, pk, pkValue], function (err: any, res: any) {
         if (err) reject(err);
         resolve(res);
-      })
+      });
     });
   }
 
@@ -109,7 +109,7 @@ class Options {
 
 // Create the SQL schema
 export function createSchema() {
-  let database: string = Config.Instance.database;
+  const database: string = Config.Instance.database;
   const options: Options = {
     user: process.env.MYSQL_USER,
     password: process.env.MYSQL_PASSWORD,

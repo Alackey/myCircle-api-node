@@ -8,7 +8,7 @@ import { DBConnection } from "../database/cloudsql";
  * Get a user but username.
  */
 export let getByUsername = (req: Request, res: Response) => {
-  const username = req.query.username;
+  const { username } = req.query;
   if (username === undefined) {
     return res.status(400).json({ error: "No username provided" });
   }
@@ -31,13 +31,8 @@ export let getByUsername = (req: Request, res: Response) => {
  */
 export let create = (req: Request, res: Response) => {
   const connection = DBConnection.Instance;
-  const user = new User(
-    req.body.username,
-    req.body.photoUrl,
-    req.body.firstname,
-    req.body.lastname,
-    req.body.email
-  );
+  const { username, photoUrl, firstname, lastname, email } = req.body;
+  const user = new User(username, photoUrl, firstname, lastname, email);
 
   connection.insert(user)
     .then((response) => {
@@ -53,7 +48,7 @@ export let create = (req: Request, res: Response) => {
  * Delete a user.
  */
 export let deleteUser = (req: Request, res: Response) => {
-  const username = req.query.username;
+  const { username } = req.query;
   if (username === undefined) {
     return res.status(400).json({ error: "No username provided" });
   }
