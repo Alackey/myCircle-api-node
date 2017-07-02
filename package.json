@@ -1,7 +1,7 @@
 {
-  "name": "groupme-rest-api",
+  "name": "myCircle-api",
   "version": "0.1.0",
-  "description": "The rest api for the groupme app",
+  "description": "The rest api for the myCircle app",
   "repository": {
     "type": "git",
     "url": "https://github.com/Alackey/groupme-rest-api.git"

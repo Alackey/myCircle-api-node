@@ -9,7 +9,7 @@ export default class Config {
       this.instance = new Config();
 
       // Assign variables
-      this.instance.database = "groupup";
+      this.instance.database = "mycircle";
       if (process.env.NODE_ENV === "test") {
         this.instance.database = this.instance.database + "_test";
       }
