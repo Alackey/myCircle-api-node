@@ -50,6 +50,19 @@ describe("UsersController", function () {
           response.body.error.toLowerCase().should.equal("no username provided");
         });
     });
+
+    it("should return some user data", function () {
+      return request(app)
+        .get("/users")
+        .query({ username: "alackey" })
+        .expect(200)
+        .expect('Content-Type', /json/)
+        .then(response => {
+          response.body.status.toLowerCase().should.equal("success");
+          response.body.should.have.property("data");
+          Object.keys(response.body.data).should.have.lengthOf(6);
+        });
+    });
   });
 
   describe("Delete a user by username", function () {

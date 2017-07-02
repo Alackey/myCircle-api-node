@@ -19,7 +19,7 @@ export let getByUsername = (req: Request, res: Response) => {
       if (response === undefined) {
         return res.status(400).json({ error: "User not found" });
       }
-      res.json({ status: "success" });
+      res.json({ status: "success", data: response });
     }).catch((err) => {
       res.status(400).json({ error: err });
     });
